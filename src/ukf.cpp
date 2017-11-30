@@ -190,6 +190,7 @@ void UKF::Prediction(double delta_t) {
 	  Xsig_aug.col(i+1)        = x_aug + sqrt(lambda_+n_aug_) * L.col(i);
 	  Xsig_aug.col(i+1+n_aug_) = x_aug - sqrt(lambda_+n_aug_) * L.col(i);
 	}
+	cout << "After Generate sigma points" << endl;
 
 
 	//-----------------
@@ -240,6 +241,7 @@ void UKF::Prediction(double delta_t) {
 	  Xsig_pred_(3,i) = yaw_p;
 	  Xsig_pred_(4,i) = yawd_p;
 	}
+	cout << "After Predict sigma points" << endl;
 
 
 	//-----------------
