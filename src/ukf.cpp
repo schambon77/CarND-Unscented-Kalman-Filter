@@ -25,10 +25,10 @@ UKF::UKF() {
   P_ = MatrixXd(5, 5);
 
   // Process noise standard deviation longitudinal acceleration in m/s^2
-  std_a_ = 0.25;
+  std_a_ = 1; //0.25;
 
   // Process noise standard deviation yaw acceleration in rad/s^2
-  std_yawdd_ = 1.5;
+  std_yawdd_ = 3; //1.5;
 
   // Laser measurement noise standard deviation position1 in m
   std_laspx_ = 0.15;
@@ -126,7 +126,6 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
   double dt = (meas_package.timestamp_ - time_us_) / 1000000.0;	//dt - expressed in seconds
   time_us_ = meas_package.timestamp_;
   cout << "dt = " << dt << endl;
-  cout << "Before Prediction" << endl;
   Prediction(dt);
 
   //-----------------
@@ -134,11 +133,9 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
   //-----------------
   if (meas_package.sensor_type_== MeasurementPackage::RADAR) {
     // Radar updates
-	  cout << "Before UpdateRadar" << endl;
 	  UpdateRadar(meas_package);
   } else {
     // Lidar updates
-	  cout << "Before UpdateLidar" << endl;
 	  UpdateLidar(meas_package);
   }
 }
@@ -190,7 +187,6 @@ void UKF::Prediction(double delta_t) {
 	  Xsig_aug.col(i+1)        = x_aug + sqrt(lambda_+n_aug_) * L.col(i);
 	  Xsig_aug.col(i+1+n_aug_) = x_aug - sqrt(lambda_+n_aug_) * L.col(i);
 	}
-	cout << "After Generate sigma points" << endl;
 
 
 	//-----------------
@@ -241,7 +237,6 @@ void UKF::Prediction(double delta_t) {
 	  Xsig_pred_(3,i) = yaw_p;
 	  Xsig_pred_(4,i) = yawd_p;
 	}
-	cout << "After Predict sigma points" << endl;
 
 
 	//-----------------
@@ -255,14 +250,12 @@ void UKF::Prediction(double delta_t) {
 	  double weight = 0.5/(n_aug_+lambda_);
 	  weights_(i) = weight;
 	}
-	cout << "After Set weights" << endl;
 
     //predicted state mean
     x_.fill(0.0);
 	for (int i = 0; i < 2 * n_aug_ + 1; i++) {  //iterate over sigma points
 	    x_ = x_ + weights_(i) * Xsig_pred_.col(i);
 	}
-	cout << "After Predict state mean" << endl;
 
 	//predicted state covariance matrix
 	P_.fill(0.0);
