@@ -58,7 +58,7 @@ UKF::UKF() {
   n_x_ = 5;
   n_aug_ = 7;
   lambda_ = 3 - n_aug_;
-  Xsig_pred_ = MatrixXd(n_aug_, 2*n_aug_ + 1);
+  Xsig_pred_ = MatrixXd(n_x_, 2*n_aug_ + 1);
   time_us_ = 0;
   weights_ = VectorXd(2*n_aug_ + 1);
 }
@@ -259,7 +259,7 @@ void UKF::Prediction(double delta_t) {
 
     //predicted state mean
     x_.fill(0.0);
-	  for (int i = 0; i < 2 * n_aug_ + 1; i++) {  //iterate over sigma points
+	for (int i = 0; i < 2 * n_aug_ + 1; i++) {  //iterate over sigma points
 	    x_ = x_ + weights_(i) * Xsig_pred_.col(i);
 	}
 	cout << "After Predict state mean" << endl;
