@@ -13,7 +13,7 @@ using std::vector;
  */
 UKF::UKF() {
   // if this is false, laser measurements will be ignored (except during init)
-  use_laser_ = false;
+  use_laser_ = true;
 
   // if this is false, radar measurements will be ignored (except during init)
   use_radar_ = true;
@@ -134,9 +134,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
   //-----------------
   double dt = (meas_package.timestamp_ - time_us_) / 1000000.0;	//dt - expressed in seconds
   time_us_ = meas_package.timestamp_;
-  cout << "Before Prediction step" << endl;
   Prediction(dt);
-  cout << "After Prediction step" << endl;
 
   //-----------------
   //Measurement update step
@@ -144,11 +142,9 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
   if (meas_package.sensor_type_== MeasurementPackage::RADAR && use_radar_) {
     // Radar updates
 	  UpdateRadar(meas_package);
-	  cout << "After radar update" << endl;
   } else if (meas_package.sensor_type_== MeasurementPackage::LASER && use_laser_) {
     // Lidar updates
 	  UpdateLidar(meas_package);
-	  cout << "After laser update" << endl;
   }
 }
 
@@ -199,7 +195,6 @@ void UKF::Prediction(double delta_t) {
 	  Xsig_aug.col(i+1)        = x_aug + sqrt(lambda_+n_aug_) * L.col(i);
 	  Xsig_aug.col(i+1+n_aug_) = x_aug - sqrt(lambda_+n_aug_) * L.col(i);
 	}
-	cout << "After generate sigma points" << endl;
 
 
 	//-----------------
@@ -250,7 +245,6 @@ void UKF::Prediction(double delta_t) {
 	  Xsig_pred_(3,i) = yaw_p;
 	  Xsig_pred_(4,i) = yawd_p;
 	}
-	cout << "After predict sigma points" << endl;
 
 
 	//-----------------
