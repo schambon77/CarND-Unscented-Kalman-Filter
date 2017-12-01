@@ -16,7 +16,7 @@ UKF::UKF() {
   use_laser_ = true;
 
   // if this is false, radar measurements will be ignored (except during init)
-  use_radar_ = true;
+  use_radar_ = false;
 
   // initial state vector
   x_ = VectorXd(5);
@@ -84,7 +84,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 	// first measurement
 	cout << "UKF: " << endl;
 
-	if (meas_package.sensor_type_ == MeasurementPackage::RADAR) {
+	if (meas_package.sensor_type_ == MeasurementPackage::RADAR && use_radar_) {
 	  /**
 	  Convert radar from polar to cartesian coordinates and initialize state.
 	  */
@@ -97,8 +97,14 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 			0, 0, 1, 0, 0,
 			0, 0, 0, 1, 0,
 			0, 0, 0, 0, 1;
+
+	  time_us_ = meas_package.timestamp_;
+
+      // done initializing, no need to predict or update
+	  is_initialized_ = true;
+	  return;
 	}
-	else if (meas_package.sensor_type_ == MeasurementPackage::LASER) {
+	else if (meas_package.sensor_type_ == MeasurementPackage::LASER && use_laser_) {
 	  /**
 	  Initialize state.
 	  */
@@ -111,13 +117,13 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 			0, 0, 1, 0, 0,
 			0, 0, 0, 1, 0,
 			0, 0, 0, 0, 1;
-	}
 
-	time_us_ = meas_package.timestamp_;
+	  time_us_ = meas_package.timestamp_;
 
-	// done initializing, no need to predict or update
-	is_initialized_ = true;
-	return;
+      // done initializing, no need to predict or update
+	  is_initialized_ = true;
+	  return;
+    }
   }
 
   //-----------------
@@ -130,10 +136,10 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
   //-----------------
   //Measurement update step
   //-----------------
-  if (meas_package.sensor_type_== MeasurementPackage::RADAR) {
+  if (meas_package.sensor_type_== MeasurementPackage::RADAR && use_radar_) {
     // Radar updates
 	  UpdateRadar(meas_package);
-  } else {
+  } else if (meas_package.sensor_type_== MeasurementPackage::LASER && use_laser_) {
     // Lidar updates
 	  UpdateLidar(meas_package);
   }
