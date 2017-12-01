@@ -3,6 +3,34 @@ Self-Driving Car Engineer Nanodegree Program
 
 In this project utilize an Unscented Kalman Filter to estimate the state of a moving object of interest with noisy lidar and radar measurements. Passing the project requires obtaining RMSE values that are lower that the tolerance outlined in the project rubric. 
 
+
+UKF RMSE:
+- Both sensors:
+X: 0.0687
+Y: 0.0834
+VX: 0.2920
+VY: 0.2526
+- Laser only:
+X: 0.1024
+Y: 0.0985
+VX: 0.4642
+VY: 0.2795
+- Radar only:
+X: 0.1517
+Y: 0.2168
+VX: 0.4363
+VY: 0.2586
+UKF RMSE:
+- Both sensors:
+X: 0.0964
+Y: 0.0853
+VX: 0.4154
+VY: 0.4316
+
+
+
+
+
 This project involves the Term 2 Simulator which can be downloaded [here](https://github.com/udacity/self-driving-car-sim/releases)
 
 This repository includes two files that can be used to set up and intall [uWebSocketIO](https://github.com/uWebSockets/uWebSockets) for either Linux or Mac systems. For windows you can use either Docker, VMware, or even [Windows 10 Bash on Ubuntu](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/) to install uWebSocketIO. Please see [this concept in the classroom](https://classroom.udacity.com/nanodegrees/nd013/parts/40f38239-66b6-46ec-ae68-03afd8a601c8/modules/0949fca6-b379-42af-a919-ee50aa304e6a/lessons/f758c44c-5e40-4e01-93b5-1a82aa4e044f/concepts/16cf4a78-4fc7-49e1-8621-3450ca938b77) for the required version and installation scripts.
