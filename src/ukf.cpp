@@ -276,6 +276,8 @@ void UKF::Prediction(double delta_t) {
 	  VectorXd x_diff = Xsig_pred_.col(i) - x_;
 	  //angle normalization
 	  cout << "Before angle normalization" << endl;
+	  cout << "Xsig_pred_(3, i): " << Xsig_pred_(3, i) << endl;
+	  cout << "x_(3): " << x_(3) << endl;
 	  cout << "x_diff(3): " << x_diff(3) << endl;
 	  while (x_diff(3)> M_PI) x_diff(3)-=2.*M_PI;
 	  while (x_diff(3)<-M_PI) x_diff(3)+=2.*M_PI;
