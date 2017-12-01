@@ -124,7 +124,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
 	  is_initialized_ = true;
 	  return;
     }
-	if (!is_initialized) {
+	if (!is_initialized_) {
 		return;
 	}
   }
