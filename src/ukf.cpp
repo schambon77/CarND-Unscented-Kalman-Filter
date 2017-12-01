@@ -132,6 +132,7 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
   double dt = (meas_package.timestamp_ - time_us_) / 1000000.0;	//dt - expressed in seconds
   time_us_ = meas_package.timestamp_;
   Prediction(dt);
+  cout << "After Prediction step" << endl;
 
   //-----------------
   //Measurement update step
@@ -139,9 +140,11 @@ void UKF::ProcessMeasurement(MeasurementPackage meas_package) {
   if (meas_package.sensor_type_== MeasurementPackage::RADAR && use_radar_) {
     // Radar updates
 	  UpdateRadar(meas_package);
+	  cout << "After radar update" << endl;
   } else if (meas_package.sensor_type_== MeasurementPackage::LASER && use_laser_) {
     // Lidar updates
 	  UpdateLidar(meas_package);
+	  cout << "After laser update" << endl;
   }
 }
 
