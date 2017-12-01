@@ -15,11 +15,11 @@ The project rubric points can be found [here](https://review.udacity.com/#!/rubr
 
 The [source code](https://github.com/schambon77/CarND-Unscented-Kalman-Filter/tree/master/src) compiles without errors with `cmake` and `make` by executing the following commands from the repository top folder:
 
-mkdir build
-cd build
-cmake ..
-make
-./UnscentedKF
+1. mkdir build
+2. cd build
+3. cmake ..
+4. make
+5. ./UnscentedKF
 
 ### Accuracy
 
@@ -34,7 +34,7 @@ The `UKF` constructor finishes the initialization of several member variables, i
 The process noise standard deviation longitudinal acceleration `std_a_` is set to 1. The process noise standard deviation yaw acceleration `std_yawdd_` is set to 1.5.
 
 
-The UKF::ProcessMeasurement() method handles the first measurements appropriately, whether it is a laser or radar measurements, in order to initialize the state vector x and covariance matrice P. In the case of a radar measurement, the first 2 diagonal elements of P are initialized using the standard deviation of the radius `std_radr_` as follows: `std_radr_*std_radr_/2`. In the case of a laser measurement, standard deviations of px and py are used. Other terms are initialized to 1.
+The `UKF::ProcessMeasurement()` method handles the first measurement appropriately, whether it is a laser or radar measurement, in order to initialize the state vector `x_` and covariance matrice `P_`. In the case of a radar measurement, the first 2 diagonal elements of P are initialized using the standard deviation of the radius `std_radr_` as follows: `std_radr_*std_radr_/2`. In the case of a laser measurement, standard deviations of px and py are used. Other terms are initialized to 1.
 
 The unscented Kalman filter algorithm carries on to first predict, then update.
 
@@ -47,7 +47,7 @@ The algorithm then updates the prediction using the new measurement. It can hand
 * predicting the measurement,
 * and updating the state.
 
-The correct measurement function for the given sensor type (UKF::UpdateLidar() for laser measurements, UKF::UpdateRadar() for radar measurements).
+The correct measurement function for the given sensor type (`UKF::UpdateLidar()` for laser measurements, `UKF::UpdateRadar()` for radar measurements).
 
 ### Code Efficiency
 
